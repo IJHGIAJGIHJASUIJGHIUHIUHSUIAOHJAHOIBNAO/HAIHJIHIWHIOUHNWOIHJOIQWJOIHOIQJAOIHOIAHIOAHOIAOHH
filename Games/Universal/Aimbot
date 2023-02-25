@@ -4,7 +4,7 @@
 
 ]]
 
-print("WallCheck V3.3")
+print("WallCheck V3.4")
 
 --// Cache
 
@@ -97,6 +97,7 @@ function WallCheck(player2)
 		local ignoreList = {}
 
 		for _, object in pairs(workspace:GetDescendants()) do
+			if not object.CanCollide then return nil end
 			if not object.CanCollide and not object.Transparency == 1 then
 				table.insert(ignoreList, object)
 			end
