@@ -1038,6 +1038,8 @@ PlayerSection:AddSlider({
 
 local RunService = game:GetService("RunService")
 RunService.RenderStepped:Connect(function()
+	if not game.Players.LocalPlayer.Character then return nil end
+	if not game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") then return nil end
 	game.workspace.CurrentCamera.FieldOfView = _G.FOVLoop
 	game.Players.LocalPlayer.Character.Humanoid.JumpPower = _G.JumpppowerLoop
 	game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = _G.WalkSpeedLoop
