@@ -161,6 +161,8 @@ UpdateText("Have Fun!", false)
 
 task.wait(math.random(0.5,1.5))
 
+ScreenGui:Destroy()
+
 if game.PlaceId == 13 then
      print("LOL")
 elseif game.PlaceId == 14 then
