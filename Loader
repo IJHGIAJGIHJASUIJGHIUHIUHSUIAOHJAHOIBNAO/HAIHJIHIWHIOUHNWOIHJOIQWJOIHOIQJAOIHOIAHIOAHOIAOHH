@@ -1,5 +1,77 @@
 -- Load DATA --
 
+
+local ScreenGui = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local title_text = Instance.new("TextLabel")
+local Wait_Text = Instance.new("TextLabel")
+local Status_Text = Instance.new("TextLabel")
+
+--Properties:
+
+ScreenGui.Parent = game:GetService("CoreGui")
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+Frame.Parent = ScreenGui
+Frame.BackgroundColor3 = Color3.fromRGB(56, 56, 56)
+Frame.Size = UDim2.new(1, 0, 1, 0)
+
+title_text.Name = "title_text"
+title_text.Parent = Frame
+title_text.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+title_text.BackgroundTransparency = 1.000
+title_text.Position = UDim2.new(0, 0, 0.031198686, 0)
+title_text.Size = UDim2.new(1, 0, 0.134367004, 0)
+title_text.Font = Enum.Font.SourceSansBold
+title_text.Text = "NEKOHUB V3"
+title_text.TextColor3 = Color3.fromRGB(255, 255, 255)
+title_text.TextScaled = true
+title_text.TextSize = 14.000
+title_text.TextWrapped = true
+
+
+Wait_Text.Name = "Wait_Text"
+Wait_Text.Parent = Frame
+Wait_Text.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Wait_Text.BackgroundTransparency = 1.000
+Wait_Text.Position = UDim2.new(0, 0, 0.908159077, 0)
+Wait_Text.Size = UDim2.new(1, 0, 0.0688524619, 0)
+Wait_Text.Font = Enum.Font.SourceSansBold
+Wait_Text.Text = "Please Wait a few Secounds"
+Wait_Text.TextColor3 = Color3.fromRGB(255, 255, 255)
+Wait_Text.TextScaled = true
+Wait_Text.TextSize = 14.000
+Wait_Text.TextWrapped = true
+
+
+
+Status_Text.Name = "Status_Text"
+Status_Text.Parent = Frame
+Status_Text.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Status_Text.BackgroundTransparency = 1.000
+Status_Text.Position = UDim2.new(0, 0, 0.519672155, 0)
+Status_Text.Size = UDim2.new(1, 0, 0.0688524619, 0)
+Status_Text.Font = Enum.Font.SourceSansBold
+Status_Text.Text = ""
+Status_Text.TextColor3 = Color3.fromRGB(255, 255, 255)
+Status_Text.TextScaled = true
+Status_Text.TextSize = 14.000
+Status_Text.TextWrapped = true
+
+function UpdateText(Text, L)
+	Status_Text.Text = Text
+	task.wait(0.5)
+	if L == true then
+		Status_Text.Text = Text.."."
+		task.wait(0.5)
+		Status_Text.Text = Text..".."
+		task.wait(0.5)
+		Status_Text.Text = Text.."..."
+		task.wait(0.5)
+	end
+end
+
+
 print("Loading data...")
 
 -- // SPOOF STUFF \\ --
@@ -46,6 +118,12 @@ end)
 
 setreadonly(mt, true)
 end
+
+
+UpdateText("SPOOFING WalkSpeed and JumpPower", true)
+
+task.wait(math.random(0.6,2))
+
 -- // SPOOF STUFF \\ --
 
 -- // Clear Packages \\ --
@@ -55,6 +133,15 @@ for i,v in pairs(game:GetService("CorePackages"):GetChildren()) do
         v:Destroy()
      end
 end)
+
+UpdateText("SPOOFING Packages", true)
+
+task.wait(math.random(0.3, 1.3))
+
+UpdateText("CLEARING Packages", true )
+
+task.wait(math.random(0.5,1.5))
+
 -- // Clear Packages \\ --
 
 -- // Anti AFK \\ --
@@ -66,6 +153,13 @@ local vu = game:GetService("VirtualUser")
 	end)
 -- // Anti AFK \\ --
 
+UpdateText("Ready!", false)
+
+task.wait(math.random(0.5,1.5))
+
+UpdateText("Have Fun!", false)
+
+task.wait(math.random(0.5,1.5))
 
 if game.PlaceId == 13 then
      print("LOL")
