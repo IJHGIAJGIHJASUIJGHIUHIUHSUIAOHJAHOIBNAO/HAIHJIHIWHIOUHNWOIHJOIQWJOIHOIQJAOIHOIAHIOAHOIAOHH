@@ -54,7 +54,8 @@ local MainFrame = Library:CreateWindow({
 local PlayerSettings = {
 	WalkSpeed = 16,
 	JumpPower = 50,
-	Pov = 80
+	Pov = 80,
+	Gravity = 196.2
 }
 
 
@@ -1008,6 +1009,17 @@ PlayerSection:AddSlider({
 	Decimals = 1
 }).Default = PlayerSettings.Jumpppower
 
+PlayerSection:AddSlider({
+	Name = "Gravity",
+	Value = PlayerSettings.Gravity,
+	Callback = function(New, Old)
+		_G.GravityLoop = New
+	end,
+	Min = -100,
+	Max = 400,
+	Decimals = 1
+}).Default = PlayerSettings.Gravity
+
 
 PlayerSection:AddSlider({
 	Name = "FOV",
@@ -1022,23 +1034,115 @@ PlayerSection:AddSlider({
 
 
 
+
+
 local RunService = game:GetService("RunService")
 RunService.RenderStepped:Connect(function()
 	game.workspace.CurrentCamera.FieldOfView = _G.FOVLoop
-	game.Players.LocalPlayer.Character.Humanoid.JumpPower = _G.JumpPower
+	game.Players.LocalPlayer.Character.Humanoid.JumpPower = _G.JumpppowerLoop
 	game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = _G.WalkSpeedLoop
-
+	if game:GetService("Workspace") then
+		game:GetService("Workspace").Gravity = _G.GravityLoop
+	end
 end)
 
 game.Players.LocalPlayer.Character:WaitForChild("Humanoid"):GetPropertyChangedSignal("WalkSpeed"):Connect(function()
 	game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = _G.WalkSpeedLoop
+	print("WalkSpeed Changed!")
 end)
 
 game.Players.LocalPlayer.Character:WaitForChild("Humanoid"):GetPropertyChangedSignal("JumpPower"):Connect(function()
 	game.Players.LocalPlayer.Character.Humanoid.JumpPower = _G.JumpppowerLoop
+	RunService.RenderStepped:Connect(function()
+		game.Players.LocalPlayer.Character.Humanoid.JumpPower = _G.JumpppowerLoop
+	end)
 end)
 
 --// Functions / Functions
+
+FunctionsSection:AddButton({
+	Name = "Rejoin",
+	Callback = function()
+		game:GetService("TeleportService"):Teleport(game.PlaceId, game:GetService("Players").LocalPlayer)
+	end
+})
+-- SERVER HOP -- 
+local PlaceID = game.PlaceId
+local AllIDs = {}
+local foundAnything = ""
+local actualHour = os.date("!*t").hour
+local Deleted = false
+local File = pcall(function()
+    AllIDs = game:GetService('HttpService'):JSONDecode(readfile("NotSameServers.json"))
+end)
+if not File then
+    table.insert(AllIDs, actualHour)
+    writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
+end
+function TPReturner()
+    local Site;
+    if foundAnything == "" then
+        Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100'))
+    else
+        Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100&cursor=' .. foundAnything))
+    end
+    local ID = ""
+    if Site.nextPageCursor and Site.nextPageCursor ~= "null" and Site.nextPageCursor ~= nil then
+        foundAnything = Site.nextPageCursor
+    end
+    local num = 0;
+    for i,v in pairs(Site.data) do
+        local Possible = true
+        ID = tostring(v.id)
+        if tonumber(v.maxPlayers) > tonumber(v.playing) then
+            for _,Existing in pairs(AllIDs) do
+                if num ~= 0 then
+                    if ID == tostring(Existing) then
+                        Possible = false
+                    end
+                else
+                    if tonumber(actualHour) ~= tonumber(Existing) then
+                        local delFile = pcall(function()
+                            delfile("NotSameServers.json")
+                            AllIDs = {}
+                            table.insert(AllIDs, actualHour)
+                        end)
+                    end
+                end
+                num = num + 1
+            end
+            if Possible == true then
+                table.insert(AllIDs, ID)
+                wait()
+                pcall(function()
+                    writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
+                    wait()
+                    game:GetService("TeleportService"):TeleportToPlaceInstance(PlaceID, ID, game.Players.LocalPlayer)
+                end)
+                wait(4)
+            end
+        end
+    end
+end
+
+function Teleport()
+    while wait() do
+        pcall(function()
+            TPReturner()
+            if foundAnything ~= "" then
+                TPReturner()
+            end
+        end)
+    end
+end
+-- SERVERHOP --
+
+FunctionsSection:AddButton({
+	Name = "ServerHop",
+	Callback = function()
+		Teleport()
+	end
+})
 
 FunctionsSection:AddButton({
 	Name = "Reset Settings",
