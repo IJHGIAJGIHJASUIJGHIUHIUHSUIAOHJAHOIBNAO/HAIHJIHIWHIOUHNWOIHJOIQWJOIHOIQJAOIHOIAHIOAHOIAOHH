@@ -1,3 +1,68 @@
+-- Load DATA --
+
+-- // SPOOF STUFF \\ --
+
+local out = rconsoleprint or function() end
+
+local mt = getrawmetatable(game)
+local oldindex = mt.__index
+local oldnewindex = mt.__newindex
+setreadonly(mt, false)
+
+local hum = game:service'Players'.LocalPlayer.Character.Humanoid
+local oldws = hum.WalkSpeed
+local oldjp = hum.JumpPower
+
+mt.__newindex = newcclosure(function(t, k, v)
+    if checkcaller() then
+        return oldnewindex(t,k,v)
+    elseif (t:IsA'Humanoid' and k == "WalkSpeed") then
+        v = tonumber(v)
+        if not v then v = 0 end
+        oldws = v
+    elseif (t:IsA'Humanoid' and k == "JumpPower") then
+        v = tonumber(v)
+        if not v then v = 0 end
+        oldjp = v
+    else
+        return oldnewindex(t,k,v)
+    end
+end)
+
+mt.__index = newcclosure(function(t, k)
+    if checkcaller() then
+        return oldindex(t,k)
+    elseif (t:IsA'Humanoid' and k == "WalkSpeed") then
+        return oldws
+    elseif (t:IsA'Humanoid' and k == "JumpPower") then
+        return oldjp
+    else
+        return oldindex(t,k)
+    end
+end)
+
+setreadonly(mt, true)
+-- // SPOOF STUFF \\ --
+
+-- // Clear Packages \\ --
+local RunService = game:GetService("RunService")
+RunService.RenderStepped:Connect(function()
+for i,v in pairs(game:GetService("CorePackages"):GetChildren()) do
+        v:Destroy()
+     end
+end)
+-- // Clear Packages \\ --
+
+-- // Anti AFK \\ --
+local vu = game:GetService("VirtualUser")
+	game:GetService("Players").LocalPlayer.Idled:connect(function()
+		vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+		wait(1)
+		vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+	end)
+-- // Anti AFK \\ --
+
+
 if game.PlaceId == 13 then
      print("LOL")
 elseif game.PlaceId == 14 then
