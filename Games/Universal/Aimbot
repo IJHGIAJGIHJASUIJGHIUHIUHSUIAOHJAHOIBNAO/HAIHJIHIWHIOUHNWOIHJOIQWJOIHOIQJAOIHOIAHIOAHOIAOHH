@@ -97,7 +97,7 @@ function WallCheck(player2)
 		local ignoreList = {}
 
 		for _, object in pairs(workspace:GetDescendants()) do
-			if object:IsA("BasePart") and not object.CanCollide and not object.Transparency == 1 then
+			if not object.CanCollide and not object.Transparency == 1 then
 				table.insert(ignoreList, object)
 			end
 		end
