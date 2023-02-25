@@ -3,6 +3,7 @@
 print("Loading data...")
 
 -- // SPOOF STUFF \\ --
+if game.Players.LocalPlayer.Character then
 
 local out = rconsoleprint or function() end
 
@@ -44,6 +45,7 @@ mt.__index = newcclosure(function(t, k)
 end)
 
 setreadonly(mt, true)
+end
 -- // SPOOF STUFF \\ --
 
 -- // Clear Packages \\ --
