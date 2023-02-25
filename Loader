@@ -1,5 +1,7 @@
 -- Load DATA --
 
+print("Loading data...")
+
 -- // SPOOF STUFF \\ --
 
 local out = rconsoleprint or function() end
