@@ -4,7 +4,7 @@
 
 ]]
 
-print("WallCheck V3.8")
+print("WallCheck V3.9")
 
 --// Cache
 
@@ -80,7 +80,7 @@ end
 
 function WallCheck(player2)
 	if getgenv().AirHub.Aimbot.Settings.WallCheck == true then
--- Spieler-Objekte erhalten
+		-- Spieler-Objekte erhalten
 local player1 = game.Players.LocalPlayer
 
 -- Positionen der Köpfe der Spieler abrufen
@@ -93,13 +93,20 @@ local rayDirection = (headPos2 - headPos1).Unit
 -- Raycast durchführen
 local raycastParams = RaycastParams.new()
 raycastParams.FilterType = Enum.RaycastFilterType.Blacklist
-raycastParams.FilterDescendantsInstances = {player1.Character, player2.Character, game.Workspace.Camera}
+raycastParams.FilterDescendantsInstances = {player1.Character, player2.Character}
+
+local ignoreList = {}
+for _, child in ipairs(workspace:GetDescendants()) do
+    if child.Transparency ~= 1 then
+        table.insert(ignoreList, child)
+    end
+end
+raycastParams.FilterDescendantsInstances = ignoreList
 
 local raycastResult = workspace:Raycast(headPos1, rayDirection, raycastParams)
 
 -- Prüfen, ob der Ray eine Wand trifft
 if raycastResult then
-    local obstaclePart = raycastResult.Instance
     -- Abstand zwischen der Wand und den Köpfen der Spieler berechnen
     local obstacleHitPos = raycastResult.Position
     local distanceToObstacle = (obstacleHitPos - headPos1).Magnitude
@@ -109,16 +116,17 @@ if raycastResult then
     
     -- Prüfen, ob die Spieler zwischen der Wand sind
     if distanceToObstacle < distanceBetweenPlayers then
-        print("Die Spieler sind zwischen einem Hindernis.")
+        print("Die Spieler sind zwischen einer Wand.")
 		return true
     else
-        print("Die Spieler sind nicht zwischen einem Hindernis.")
+        print("Die Spieler sind nicht zwischen einer Wand.")
 		return false
     end
 else
     print("Der Raycast hat kein Hindernis getroffen.")
 	return false
 end
+
 
 	end
 end
