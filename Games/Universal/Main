@@ -247,6 +247,7 @@ Checks:AddToggle({
 	Name = "Wall Check",
 	Value = Aimbot.Settings.WallCheck,
 	Callback = function(New, Old)
+		_G.WallCheck = New
 		Aimbot.Settings.WallCheck = New
 	end
 }).Default = Aimbot.Settings.WallCheck
@@ -289,8 +290,6 @@ ThirdPerson:AddSlider({
 
 
 local function TriggetBot()
-    if _G.TriggerBot == true then
-	print("_G.TriggerBot ist An!")
     local LocalPlayer = game.Players.LocalPlayer
     local Players = game:GetService("Players")
 	local Mouse = LocalPlayer:GetMouse()
@@ -320,7 +319,6 @@ local function TriggetBot()
 			end
 		end
 	end 
-     end
 end
 
 local RunService = game:GetService("RunService")
