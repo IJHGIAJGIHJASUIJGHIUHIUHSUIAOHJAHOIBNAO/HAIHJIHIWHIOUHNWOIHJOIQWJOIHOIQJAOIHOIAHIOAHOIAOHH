@@ -4,7 +4,7 @@
 
 ]]
 
-print("WallCheck V4.1")
+print("WallCheck V4.2")
 
 -- LOL 2
 
@@ -121,6 +121,8 @@ else
     print("Der Raycast hat keine Wand getroffen.")
 	return false
 end
+else 
+	return false
 	end
 end
 
