@@ -80,7 +80,7 @@ end
 
 
 function WallCheck(player2)
-	if _G.WallCheck == true then
+        if getgenv().AirHub.Aimbot.Settings.WallCheck == true then
 	
 -- Liste mit Objekten, die ignoriert werden sollen
 local player1 = game.Players.LocalPlayer
