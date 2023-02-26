@@ -78,7 +78,8 @@ end
 
 
 function WallCheck(player2)
-
+	if _G.WallCheck == true then
+	
 -- Liste mit Objekten, die ignoriert werden sollen
 local player1 = game.Players.LocalPlayer
 local ignoreList = {}
@@ -118,6 +119,7 @@ else
     print("Der Raycast hat keine Wand getroffen.")
 	return false
 end
+	end
 end
 
 
