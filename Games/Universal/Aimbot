@@ -82,7 +82,6 @@ function WallCheck(player2)
 	if getgenv().AirHub.Aimbot.Settings.WallCheck == true then
 
 	local player1 = game.Players.LocalPlayer
-
 -- Positionen der Köpfe der Spieler abrufen
 local headPos1 = player1.Character.Head.Position
 local headPos2 = player2.Character.Head.Position
@@ -95,39 +94,47 @@ local raycastParams = RaycastParams.new()
 raycastParams.FilterType = Enum.RaycastFilterType.Blacklist
 raycastParams.FilterDescendantsInstances = {player1.Character, player2.Character}
 
+-- Eine Liste von Instanzen erstellen, die wir ignorieren möchten
+local ignoreList = {}
+
+-- Schleife durch alle Instanzen im Workspace
+for _, instance in ipairs(workspace:GetDescendants()) do
+    -- Überprüfen, ob das Objekt unsichtbar oder CanCollide auf false ist
+    if not instance:IsVisible() or (instance:IsA("BasePart") and not instance.CanCollide) then
+        table.insert(ignoreList, instance)
+    end
+end
+
+raycastParams.FilterDescendantsInstances = ignoreList
+
+-- Führe den Raycast aus
 local raycastResult = workspace:Raycast(headPos1, rayDirection, raycastParams)
 
 -- Prüfen, ob der Ray eine Wand trifft
 if raycastResult then
-    -- Prüfen, ob das getroffene Objekt eine Kollision hat
-    local hitPart = raycastResult.Instance
-    if hitPart.CanCollide then
-        -- Abstand zwischen der Wand und den Köpfen der Spieler berechnen
-        local obstacleHitPos = raycastResult.Position
-        local distanceToObstacle = (obstacleHitPos - headPos1).Magnitude
-        
-        -- Abstand zwischen den Köpfen der Spieler berechnen
-        local distanceBetweenPlayers = (headPos2 - headPos1).Magnitude
-        
-        -- Prüfen, ob die Spieler zwischen der Wand sind
-        if distanceToObstacle < distanceBetweenPlayers then
-            print("Die Spieler sind zwischen einer Wand.")
-			return true
-        else
-            print("Die Spieler sind nicht zwischen einer Wand.")
-			return false
-        end
+    -- Abstand zwischen der Wand und den Köpfen der Spieler berechnen
+    local obstacleHitPos = raycastResult.Position
+    local distanceToObstacle = (obstacleHitPos - headPos1).Magnitude
+    
+    -- Abstand zwischen den Köpfen der Spieler berechnen
+    local distanceBetweenPlayers = (headPos2 - headPos1).Magnitude
+    
+    -- Prüfen, ob die Spieler zwischen der Wand sind
+    if distanceToObstacle < distanceBetweenPlayers then
+        print("Die Spieler sind zwischen einer Wand.")
+		return true
     else
-        print("Das getroffene Objekt hat keine Kollision.")
+        print("Die Spieler sind nicht zwischen einer Wand.")
 		return false
     end
 else
     print("Der Raycast hat keine Wand getroffen.")
-	return false
+	return false 
 end
 
 	end
 end
+
 
 
 local function GetClosestPlayer()
