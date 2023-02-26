@@ -41,7 +41,7 @@ local MainFrame = Library:CreateWindow({
 	Name = "NekoHub",
 	Themeable = {
 		Image = "7059346386",
-		Info = "Made by Exunys\nPowered by Pepsi's UI Library",
+		Info = "Made by Soldo#0444 and ¬_¬ Ɓoƨƨ ιƨ ʙɑck#5009",
 		Credit = false
 	},
 	Background = "",
