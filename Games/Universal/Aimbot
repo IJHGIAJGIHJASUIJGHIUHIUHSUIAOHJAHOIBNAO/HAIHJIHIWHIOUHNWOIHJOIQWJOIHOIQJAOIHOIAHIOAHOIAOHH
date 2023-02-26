@@ -77,31 +77,23 @@ local function CancelLock()
 end
 
 
-
 function WallCheck(player2)
-	if getgenv().AirHub.Aimbot.Settings.WallCheck == true then
-		-- Spieler-Objekte erhalten
+
+-- Liste mit Objekten, die ignoriert werden sollen
 local player1 = game.Players.LocalPlayer
+local ignoreList = {}
 
 -- Positionen der Köpfe der Spieler abrufen
 local headPos1 = player1.Character.Head.Position
 local headPos2 = player2.Character.Head.Position
 
 -- Richtungsvektor des Rays berechnen
-local rayDirection = (headPos2 - headPos1).Unit
+local rayDirection = (headPos2 - headPos1).Unit * 1000
 
 -- Raycast durchführen
 local raycastParams = RaycastParams.new()
 raycastParams.FilterType = Enum.RaycastFilterType.Blacklist
 raycastParams.FilterDescendantsInstances = {player1.Character, player2.Character}
-
-local ignoreList = {}
-for _, child in ipairs(workspace:GetDescendants()) do
-    if child.Transparency ~= 1 then
-        table.insert(ignoreList, child)
-    end
-end
-raycastParams.FilterDescendantsInstances = ignoreList
 
 local raycastResult = workspace:Raycast(headPos1, rayDirection, raycastParams)
 
@@ -123,12 +115,9 @@ if raycastResult then
 		return false
     end
 else
-    print("Der Raycast hat kein Hindernis getroffen.")
+    print("Der Raycast hat keine Wand getroffen.")
 	return false
 end
-
-
-	end
 end
 
 
