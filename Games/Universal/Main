@@ -3,8 +3,7 @@
 	NekoHub By Soldo#0444 and ¬_¬ Ɓoƨƨ ιƨ ʙɑck#5009 © CC0 1.0 Universal (2023)
 
 ]]
-
--- LOL
+print("UI V1.2") 
 
 --// Cache
 
@@ -1059,6 +1058,15 @@ game.Players.LocalPlayer.Character:WaitForChild("Humanoid"):GetPropertyChangedSi
 		game.Players.LocalPlayer.Character.Humanoid.JumpPower = _G.JumpppowerLoop
 	end)
 end)
+
+game.workspace.CurrentCamera:GetPropertyChangedSignal("FieldOfView"):Connect(function()
+	game.workspace.CurrentCamera.FieldOfView = _G.FOVLoop
+end)
+
+game:GetService("Workspace"):GetPropertyChangedSignal("Gravity"):Connect(function()
+      game:GetService("Workspace").Gravity = _G.GravityLoop
+end)
+
 
 --// Functions / Functions
 
