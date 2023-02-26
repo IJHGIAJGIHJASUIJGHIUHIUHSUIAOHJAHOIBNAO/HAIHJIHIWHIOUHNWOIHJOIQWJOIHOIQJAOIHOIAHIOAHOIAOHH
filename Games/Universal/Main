@@ -53,7 +53,7 @@ local MainFrame = Library:CreateWindow({
 local PlayerSettings = {
 	WalkSpeed = 16,
 	JumpPower = 50,
-	Pov = 80,
+	Pov = 70,
 	Gravity = 196.2
 }
 
