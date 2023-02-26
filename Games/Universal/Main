@@ -1014,7 +1014,7 @@ PlayerSection:AddSlider({
 	Callback = function(New, Old)
 		_G.GravityLoop = New
 	end,
-	Min = -100,
+	Min = 0,
 	Max = 400,
 	Decimals = 1
 }).Default = PlayerSettings.Gravity
