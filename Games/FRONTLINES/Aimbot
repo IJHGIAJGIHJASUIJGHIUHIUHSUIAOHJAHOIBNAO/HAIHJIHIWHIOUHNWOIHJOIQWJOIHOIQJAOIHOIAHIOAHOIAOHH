@@ -141,7 +141,7 @@ local function GetClosestPlayer()
 				print(v.Character.Name)
 
 				local Vector, OnScreen = Camera:WorldToViewportPoint(v.Character[Environment.Settings.LockPart].Position); Vector = ConvertVector(Vector)
-				local Distance = (UserInputService:GetMouseLocation() - Vector).Magnitude
+				local Distance = (game.Players.LocalPlayer.HumanoidRootPart.Position - Vector).Magnitude
 
                 print("Player: "..v.Name.." Char: "..v.Character.Name.." Dis: "..Distance)
 
