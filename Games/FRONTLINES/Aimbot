@@ -42,7 +42,7 @@ getgenv().AirHub.Aimbot = {
 		ThirdPersonSensitivity = 3,
 		TriggerKey = "MouseButton2",
 		Toggle = false,
-		LockPart = "Head" -- Body part to lock on
+		LockPart = "HumanoidRootPart" -- Body part to lock on
 	},
 
 	FOVSettings = {
@@ -87,8 +87,8 @@ local player1 = game.Players.LocalPlayer
 local ignoreList = {}
 
 -- Positionen der Köpfe der Spieler abrufen
-local headPos1 = player1.Character.Head.Position
-local headPos2 = player2.Character.Head.Position
+local headPos1 = player1.Character.HumanoidRootPart.Position
+local headPos2 = player2.Character.HumanoidRootPart.Position
 
 -- Richtungsvektor des Rays berechnen
 local rayDirection = (headPos2 - headPos1).Unit * 1000
@@ -271,7 +271,7 @@ function Environment.Functions:ResetSettings()
 		ThirdPersonSensitivity = 3,
 		TriggerKey = "MouseButton2",
 		Toggle = false,
-		LockPart = "Head" -- Body part to lock on
+		LockPart = "HumanoidRootPart" -- Body part to lock on
 	}
 
 	Environment.FOVSettings = {
