@@ -129,6 +129,7 @@ end
 
 
 local function GetClosestPlayer()
+	print("GetClosestPlayer")
 	if not Environment.Locked then
 		RequiredDistance = (Environment.FOVSettings.Enabled and Environment.FOVSettings.Amount or 2000)
 
