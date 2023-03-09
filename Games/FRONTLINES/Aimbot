@@ -4,7 +4,7 @@
 
 ]]
 
-print("WallCheck V1.2")
+print("WallCheck V1.3")
 
 -- LOL 2
 
@@ -137,6 +137,7 @@ local function GetClosestPlayer()
 				if Environment.Settings.TeamCheck and v.TeamColor == LocalPlayer.TeamColor then continue end
 				if Environment.Settings.AliveCheck and v.Character:FindFirstChildOfClass("Humanoid").Health <= 0 then continue end
 				if WallCheck(v) == false then 
+				print(v.Character.Name)
 
 				local Vector, OnScreen = Camera:WorldToViewportPoint(v.Character[Environment.Settings.LockPart].Position); Vector = ConvertVector(Vector)
 				local Distance = (UserInputService:GetMouseLocation() - Vector).Magnitude
