@@ -320,31 +320,16 @@ local Visuals = {
 			if PlayerTable.RigType == "R15" then
 				if not Environment.Visuals.ChamsSettings.EntireBody then
 					PlayerTable.Chams = {
-						Head = {},
-						UpperTorso = {},
-						LeftLowerArm = {}, LeftUpperArm = {},
-						RightLowerArm = {}, RightUpperArm = {},
-						LeftLowerLeg = {}, LeftUpperLeg = {},
-						RightLowerLeg = {}, RightUpperLeg = {}
+						HumanoidRootPart = {}
 					}
 				else
 					PlayerTable.Chams = {
-						Head = {},
-						UpperTorso = {}, LowerTorso = {},
-						LeftLowerArm = {}, LeftUpperArm = {}, LeftHand = {},
-						RightLowerArm = {}, RightUpperArm = {}, RightHand = {},
-						LeftLowerLeg = {}, LeftUpperLeg = {}, LeftFoot = {},
-						RightLowerLeg = {}, RightUpperLeg = {}, RightFoot = {}
+						HumanoidRootPart = {}
 					}
 				end
 			elseif PlayerTable.RigType == "R6" then
 				PlayerTable.Chams = {
-					Head = {},
-					Torso = {},
-					["Left Arm"] = {},
-					["Right Arm"] = {},
-					["Left Leg"] = {},
-					["Right Leg"] = {}
+					HumanoidRootPart = {}
 				}
 			end
 
@@ -376,8 +361,8 @@ local Visuals = {
 		PlayerTable.ESP = Drawingnew("Text")
 
 		PlayerTable.Connections.ESP = RunService.RenderStepped:Connect(function()
-			if Player.Character and Player.Character:FindFirstChildOfClass("Humanoid") and Player.Character:FindFirstChild("HumanoidRootPart") and Player.Character:FindFirstChild("Head") and Environment.Settings.Enabled then
-				local Vector, OnScreen = WorldToViewportPoint(Player.Character.Head.Position)
+			if Player.Character and Player.Character:FindFirstChildOfClass("Humanoid") and Player.Character:FindFirstChild("HumanoidRootPart") and Player.Character:FindFirstChild("HumanoidRootPart") and Environment.Settings.Enabled then
+				local Vector, OnScreen = WorldToViewportPoint(Player.Character.HumanoidRootPart.Position)
 
 				PlayerTable.ESP.Visible = Environment.Visuals.ESPSettings.Enabled
 
@@ -429,12 +414,12 @@ local Visuals = {
 		PlayerTable.Tracer = Drawingnew("Line")
 
 		PlayerTable.Connections.Tracer = RunService.RenderStepped:Connect(function()
-			if Player.Character and Player.Character:FindFirstChildOfClass("Humanoid") and Player.Character:FindFirstChild("HumanoidRootPart") and Player.Character:FindFirstChild("Head") and Environment.Settings.Enabled then
+			if Player.Character and Player.Character:FindFirstChildOfClass("Humanoid") and Player.Character:FindFirstChild("HumanoidRootPart") and Environment.Settings.Enabled then
 				local HRPCFrame, HRPSize = Player.Character.HumanoidRootPart.CFrame, Player.Character.HumanoidRootPart.Size
 				local _3DVector, OnScreen = WorldToViewportPoint(HRPCFrame * CFramenew(0, -HRPSize.Y - 0.5, 0).Position)
 				local _2DVector = WorldToViewportPoint(Player.Character.HumanoidRootPart.Position)
 
-				local HeadOffset = WorldToViewportPoint(Player.Character.Head.Position + Vector3new(0, 0.5, 0))
+				local HeadOffset = WorldToViewportPoint(Player.Character.HumanoidRootPart.Position + Vector3new(0, 0.5, 0))
 				local LegsOffset = WorldToViewportPoint(Player.Character.HumanoidRootPart.Position - Vector3new(0, 1.5, 0))
 
 				if OnScreen and Environment.Visuals.TracersSettings.Enabled then
@@ -507,7 +492,7 @@ local Visuals = {
 		end
 
 		PlayerTable.Connections.Box = RunService.RenderStepped:Connect(function()
-			if Player.Character and Player.Character:FindFirstChildOfClass("Humanoid") and Player.Character:FindFirstChild("HumanoidRootPart") and Player.Character:FindFirstChild("Head") and Environment.Settings.Enabled then
+			if Player.Character and Player.Character:FindFirstChildOfClass("Humanoid") and Player.Character:FindFirstChild("HumanoidRootPart")  and Environment.Settings.Enabled then
 				local Vector, OnScreen = WorldToViewportPoint(Player.Character.HumanoidRootPart.Position)
 
 				Visibility(Environment.Visuals.BoxSettings.Enabled)
@@ -521,7 +506,7 @@ local Visuals = {
 
 					local HRPCFrame, HRPSize = Player.Character.HumanoidRootPart.CFrame, Player.Character.HumanoidRootPart.Size * Environment.Visuals.BoxSettings.Increase
 
-					local HeadOffset = WorldToViewportPoint(Player.Character.Head.Position + Vector3new(0, 0.5, 0))
+					local HeadOffset = WorldToViewportPoint(Player.Character.HumanoidRootPart.Position + Vector3new(0, 0.5, 0))
 					local LegsOffset = WorldToViewportPoint(Player.Character.HumanoidRootPart.Position - Vector3new(0, 3, 0))
 
 					local TopLeftPosition = WorldToViewportPoint(HRPCFrame * CFramenew(HRPSize.X, HRPSize.Y, 0).Position)
@@ -581,8 +566,8 @@ local Visuals = {
 		PlayerTable.HeadDot = Drawingnew("Circle")
 
 		PlayerTable.Connections.HeadDot = RunService.RenderStepped:Connect(function()
-			if Player.Character and Player.Character:FindFirstChildOfClass("Humanoid") and Player.Character:FindFirstChild("Head") and Environment.Settings.Enabled then
-				local Vector, OnScreen = WorldToViewportPoint(Player.Character.Head.Position)
+			if Player.Character and Player.Character:FindFirstChildOfClass("Humanoid") and Player.Character:FindFirstChild("HumanoidRootPart") and Environment.Settings.Enabled then
+				local Vector, OnScreen = WorldToViewportPoint(Player.Character.HumanoidRootPart.Position)
 
 				PlayerTable.HeadDot.Visible = Environment.Visuals.HeadDotSettings.Enabled
 
@@ -598,7 +583,7 @@ local Visuals = {
 							PlayerTable.HeadDot.Filled = Environment.Visuals.HeadDotSettings.Filled
 							PlayerTable.HeadDot.Position = Vector2new(Vector.X, Vector.Y)
 
-							local Top, Bottom = WorldToViewportPoint((Player.Character.Head.CFrame * CFramenew(0, Player.Character.Head.Size.Y / 2, 0)).Position), WorldToViewportPoint((Player.Character.Head.CFrame * CFramenew(0, -Player.Character.Head.Size.Y / 2, 0)).Position)
+							local Top, Bottom = WorldToViewportPoint((Player.Character.HumanoidRootPart.CFrame * CFramenew(0, Player.Character.HumanoidRootPart.Size.Y / 2, 0)).Position), WorldToViewportPoint((Player.Character.HumanoidRootPart.CFrame * CFramenew(0, -Player.Character.HumanoidRootPart.Size.Y / 2, 0)).Position)
 							PlayerTable.HeadDot.Radius = mathabs((Top - Bottom).Y) - 3
 						end
 					end
