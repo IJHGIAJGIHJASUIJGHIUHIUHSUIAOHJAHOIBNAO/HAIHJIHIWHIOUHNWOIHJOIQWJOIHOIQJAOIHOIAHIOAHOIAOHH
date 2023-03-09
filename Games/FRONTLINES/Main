@@ -19,8 +19,8 @@ getgenv().AirHub = {}
 
 --// Load Modules
 
-loadstring(game:HttpGet("https://raw.githubusercontent.com/IJHGIAJGIHJASUIJGHIUHIUHSUIAOHJAHOIBNAO/HAIHJIHIWHIOUHNWOIHJOIQWJOIHOIQJAOIHOIAHIOAHOIAOHH/main/Games/Universal/Aimbot"))()
-loadstring(game:HttpGet("https://raw.githubusercontent.com/IJHGIAJGIHJASUIJGHIUHIUHSUIAOHJAHOIBNAO/HAIHJIHIWHIOUHNWOIHJOIQWJOIHOIQJAOIHOIAHIOAHOIAOHH/main/Games/Universal/Wall_Hack"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/IJHGIAJGIHJASUIJGHIUHIUHSUIAOHJAHOIBNAO/HAIHJIHIWHIOUHNWOIHJOIQWJOIHOIQJAOIHOIAHIOAHOIAOHH/main/Games/FRONTLINES/Aimbot"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/IJHGIAJGIHJASUIJGHIUHIUHSUIAOHJAHOIBNAO/HAIHJIHIWHIOUHNWOIHJOIQWJOIHOIQJAOIHOIAHIOAHOIAOHH/main/Games/FRONTLINES/Wall_Hack"))()
 
 --// Variables
 
