@@ -21,7 +21,7 @@ end
 
 ]]
 
-print("WallCheck V4.7")
+print("WallCheck V4.2")
 
 -- LOL 2
 
@@ -149,7 +149,7 @@ local function GetClosestPlayer()
 	local MaximumDistance = 50
 	local Target = nil
 
-	for _, v in pairs(Gegner) do
+	for _, v in pairs(_G.Gegner) do
 								local ScreenPoint = Camera:WorldToScreenPoint(v:FindFirstChild("HumanoidRootPart", math.huge).Position)
 								local VectorDistance = (Vector2.new(UserInputSerivce:GetMouseLocation().X, UserInputSerivce:GetMouseLocation().Y) - Vector2.new(ScreenPoint.X, ScreenPoint.Y)).Magnitude
 
