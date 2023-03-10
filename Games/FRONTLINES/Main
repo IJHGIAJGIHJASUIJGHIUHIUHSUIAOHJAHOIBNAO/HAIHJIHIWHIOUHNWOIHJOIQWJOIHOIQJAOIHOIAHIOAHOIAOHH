@@ -21,6 +21,55 @@ getgenv().AirHub = {}
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/IJHGIAJGIHJASUIJGHIUHIUHSUIAOHJAHOIBNAO/HAIHJIHIWHIOUHNWOIHJOIQWJOIHOIQJAOIHOIAHIOAHOIAOHH/main/Games/FRONTLINES/Aimbot"))()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/IJHGIAJGIHJASUIJGHIUHIUHSUIAOHJAHOIBNAO/HAIHJIHIWHIOUHNWOIHJOIQWJOIHOIQJAOIHOIAHIOAHOIAOHH/main/Games/FRONTLINES/Wall_Hack"))()
+local esp = loadstring(game:HttpGet("https://raw.githubusercontent.com/IJHGIAJGIHJASUIJGHIUHIUHSUIAOHJAHOIBNAO/HAIHJIHIWHIOUHNWOIHJOIQWJOIHOIQJAOIHOIAHIOAHOIAOHH/main/Games/FRONTLINES/espv2"))()
+esp:Toggle(true)
+
+
+
+esp:AddObjectListener(workspace, {
+    Name = "soldier_model",
+    Type = "Model",
+    Color = Color3.fromRGB(255, 0, 4),
+
+    -- Specify the primary part of the model as the HumanoidRootPart
+    PrimaryPart = function(obj)
+        pos = obj:FindFirstChild("HumanoidRootPart").Position --get the pos to refrence to 
+        local root
+        repeat
+            for _, bp in pairs(workspace:GetChildren()) do--find the basepart to highlight
+                if bp:IsA("BasePart") then
+                    local distance = (bp.Position - pos).Magnitude
+                    if distance <= 3 then
+                        root = bp 
+                        break 
+                    end
+                end
+            end
+            task.wait()
+        until root
+        return root
+    end,
+
+    Validator = function(obj)
+        -- Wait for 1 second before continuing execution
+        task.wait(1)
+
+        -- Check if the object has a child named "friendly_marker"
+        -- If it does, return false immediately
+        if obj:FindFirstChild("friendly_marker") then
+            return false
+        end
+
+        return true 
+    end,
+
+
+    -- Set a custom name to use for the enemy models
+    CustomName = "🤤",
+
+    -- Enable the ESP for enemy models
+    IsEnabled = "enemy"
+})
 
 --// Variables
 
@@ -467,7 +516,7 @@ ESPSettings:AddToggle({
 	Name = "Enabled",
 	Value = WallHack.Visuals.ESPSettings.Enabled,
 	Callback = function(New, Old)
-		WallHack.Visuals.ESPSettings.Enabled = New
+		esp.Boxes = New
 	end
 }).Default = WallHack.Visuals.ESPSettings.Enabled
 
@@ -479,13 +528,13 @@ ESPSettings:AddToggle({
 	end
 }).Default = WallHack.Visuals.ESPSettings.Outline
 
-ESPSettings:AddToggle({
-	Name = "Display Distance",
-	Value = WallHack.Visuals.ESPSettings.DisplayDistance,
-	Callback = function(New, Old)
-		WallHack.Visuals.ESPSettings.DisplayDistance = New
-	end
-}).Default = WallHack.Visuals.ESPSettings.DisplayDistance
+
+-- Configure ESP settings
+
+esp.Tracers = true
+esp.Players = true
+esp.FaceCamera = true 
+esp.enemy = true
 
 ESPSettings:AddToggle({
 	Name = "Display Health",
@@ -499,7 +548,7 @@ ESPSettings:AddToggle({
 	Name = "Display Name",
 	Value = WallHack.Visuals.ESPSettings.DisplayName,
 	Callback = function(New, Old)
-		WallHack.Visuals.ESPSettings.DisplayName = New
+		esp.Names = New
 	end
 }).Default = WallHack.Visuals.ESPSettings.DisplayName
 
