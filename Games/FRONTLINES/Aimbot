@@ -143,6 +143,16 @@ else
 	end
 end
 
+function Nof(title,Text)
+
+game:GetService("StarterGui"):SetCore("SendNotification", {
+	Title = title; --must be string
+	Text = Text; --must be string
+	Icon = ""; --optional
+	Duration = 5; -- defaults to 5 secs if no duration is set
+	Button1 = "Button";
+})
+end
 
 
 local function GetClosestPlayer()
@@ -158,15 +168,18 @@ local function GetClosestPlayer()
 										if 	WallCheck(v) == false then 
 						Target = v
 						print("NEW TARGET!!!")
+						Nof(v.Name, v.Name)
 									
 										end
 									else
 					Target = v
 					print("NEW TARGET!!!")
+					Nof(v.Name, v.Name)
 									end
 				end
 			
 	end
+	if not Target then Nof("ERRRO!", "NO TARGET!!!")
 	return Target
 end 
 
