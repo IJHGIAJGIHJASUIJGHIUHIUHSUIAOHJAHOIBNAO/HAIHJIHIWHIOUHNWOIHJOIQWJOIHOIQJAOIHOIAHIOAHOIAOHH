@@ -183,10 +183,9 @@ local function GetClosestPlayer()
 		end
 
 	end
-	-- if not Target then Nof("ERRRO!", "NO TARGET!!!")
+	-- if not Target then Nof("ERRRO!", "NO TARGET!!!") end
 		return Target
 	end 
-end
 
 	local function Load()
 		OriginalSensitivity = UserInputService.MouseDeltaSensitivity
