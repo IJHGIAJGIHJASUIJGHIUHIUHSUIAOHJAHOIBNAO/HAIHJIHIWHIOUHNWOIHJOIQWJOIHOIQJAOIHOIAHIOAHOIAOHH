@@ -160,7 +160,7 @@ end
 
 
 local function GetClosestPlayer()
-	local MaximumDistance = 50
+	local MaximumDistance = 130
 	local Target = nil
 
 	for _, v in pairs(Gegner) do
