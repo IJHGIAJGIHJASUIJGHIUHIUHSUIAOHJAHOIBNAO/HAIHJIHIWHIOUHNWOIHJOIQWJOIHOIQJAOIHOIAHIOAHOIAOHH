@@ -33,7 +33,7 @@ end
 
 ]]
 
-print("WallCheck V0.3")
+print("WallCheck V4.2")
 
 -- LOL 2
 
@@ -167,30 +167,36 @@ function Nof(title,Text)
 	})
 end
 
+local OLDTARGET = nil
 local function GetClosestPlayer()
 	local MaximumDistance = 150
 	local Target = nil
 
-	for _, v in pairs(Gegner) do
-								local ScreenPoint = Camera:WorldToScreenPoint(v:FindFirstChild("HumanoidRootPart", math.huge).Position)
-								local VectorDistance = (Vector2.new(UserInputSerivce:GetMouseLocation().X, UserInputSerivce:GetMouseLocation().Y) - Vector2.new(ScreenPoint.X, ScreenPoint.Y)).Magnitude
+	if OLDTARGET ~= nil and Environment.Locked ~= nil then
+		Target = OLDTARGET
+	else
 
-								if VectorDistance < MaximumDistance then
-									if _G.WallCheck == true then
-										if 	WallCheck(v) == false then 
-						Target = v
-						print("NEW TARGET!!!")
-									
-										end
-									else
+		for _, v in pairs(Gegner) do
+			local ScreenPoint = Camera:WorldToScreenPoint(v:FindFirstChild("HumanoidRootPart", math.huge).Position)
+			local VectorDistance = (Vector2.new(UserInputSerivce:GetMouseLocation().X, UserInputSerivce:GetMouseLocation().Y) - Vector2.new(ScreenPoint.X, ScreenPoint.Y)).Magnitude
+
+			if VectorDistance < MaximumDistance then
+				if _G.WallCheck == true then
+					if 	WallCheck(v) == false then 
 					Target = v
-					print("NEW TARGET!!!")
-									end
+	print("NEW TARGET!!!")
+				
+					end
+				else
+Target = v
+print("NEW TARGET!!!")
 				end
-			
-		if not Target then 
-			Nof(v.Name, v.Name)	
-		end
+end
+
+if not Target then 
+Nof(v.Name, v.Name)	
+end
+end
 	end
 	return Target
 end 
