@@ -1,3 +1,19 @@
+local Gegner = {}
+
+function GetGegner()
+	Gegner = nil
+	Gegner = {}
+for i,v in pairs(game:GetService("Workspace"):GetChildren()) do
+	if v.Name == "soldier_model" then
+		if v:FindFirstChild("friendly_marker") then
+			
+		else
+			table.insert(Gegner, v)
+		end
+	end
+end
+end
+
 --[[
 
 	NekoHub By Soldo#0444 and ¬_¬ Ɓoƨƨ ιƨ ʙɑck#5009 © CC0 1.0 Universal (2023)
@@ -128,35 +144,31 @@ end
 
 
 
+
 local function GetClosestPlayer()
-	print("GetClosestPlayer")
-	if not Environment.Locked then
-		RequiredDistance = 2000 -- (Environment.FOVSettings.Enabled and Environment.FOVSettings.Amount or math.huge)
+	local MaximumDistance = 50
+	local Target = nil
 
-		for _, v in next, Players:GetPlayers() do
-			if v ~= LocalPlayer and v.Character and v.Character:FindFirstChild(Environment.Settings.LockPart) and v.Character:FindFirstChildOfClass("Humanoid") then
-				if Environment.Settings.TeamCheck and v.TeamColor == LocalPlayer.TeamColor then continue end
-				if Environment.Settings.AliveCheck and v.Character:FindFirstChildOfClass("Humanoid").Health <= 0 then continue end
-				if WallCheck(v) == false then 
-				print(v.Character.Name)
+	for _, v in pairs(Gegner) do
+								local ScreenPoint = Camera:WorldToScreenPoint(v:FindFirstChild("HumanoidRootPart", math.huge).Position)
+								local VectorDistance = (Vector2.new(UserInputSerivce:GetMouseLocation().X, UserInputSerivce:GetMouseLocation().Y) - Vector2.new(ScreenPoint.X, ScreenPoint.Y)).Magnitude
 
-				local Vector, OnScreen = Camera:WorldToViewportPoint(v.Character[Environment.Settings.LockPart].Position); Vector = ConvertVector(Vector)
-				local Distance = (v.Character.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude or 0
-
-				if Distance < RequiredDistance then -- and OnScreen
-					print("Player: "..v.Name.." Char: "..v.Character.Name.." Dis: "..Distance)
-					RequiredDistance = Distance
-					Environment.Locked = v
-				else
-					print("not OnScreen")
+								if VectorDistance < MaximumDistance then
+									if _G.WallCheck == true then
+										if 	WallCheck(v) == false then 
+						Target = v
+						print("NEW TARGET!!!")
+									
+										end
+									else
+					Target = v
+					print("NEW TARGET!!!")
+									end
 				end
-            end
-			end
-		end
-	elseif (UserInputService:GetMouseLocation() - ConvertVector(Camera:WorldToViewportPoint(Environment.Locked.Character[Environment.Settings.LockPart].Position))).Magnitude > RequiredDistance then
-		CancelLock()
+			
 	end
-end
+	return Target
+end 
 
 local function Load()
 	OriginalSensitivity = UserInputService.MouseDeltaSensitivity
@@ -180,16 +192,16 @@ local function Load()
 
 			if Environment.Locked then
 				if Environment.Settings.ThirdPerson then
-					local Vector = Camera:WorldToViewportPoint(Environment.Locked.Character[Environment.Settings.LockPart].Position)
+					local Vector = Camera:WorldToViewportPoint(Environment.Locked[Environment.Settings.LockPart].Position)
 
 					print("mousemoverel v...333")
 					mousemoverel((Vector.X - UserInputService:GetMouseLocation().X) * Environment.Settings.ThirdPersonSensitivity, (Vector.Y - UserInputService:GetMouseLocation().Y) * Environment.Settings.ThirdPersonSensitivity)
 				else
 					if Environment.Settings.Sensitivity > 0 then
-						Animation = TweenService:Create(Camera, TweenInfonew(Environment.Settings.Sensitivity, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {CFrame = CFramenew(Camera.CFrame.Position, Environment.Locked.Character[Environment.Settings.LockPart].Position)})
+						Animation = TweenService:Create(Camera, TweenInfonew(Environment.Settings.Sensitivity, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {CFrame = CFramenew(Camera.CFrame.Position, Environment.Locked[Environment.Settings.LockPart].Position)})
 						Animation:Play()
 					else
-						Camera.CFrame = CFramenew(Camera.CFrame.Position, Environment.Locked.Character[Environment.Settings.LockPart].Position)
+						Camera.CFrame = CFramenew(Camera.CFrame.Position, Environment.Locked[Environment.Settings.LockPart].Position)
 					end
 
 					UserInputService.MouseDeltaSensitivity = 0
