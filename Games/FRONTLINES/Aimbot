@@ -145,10 +145,10 @@ local function GetClosestPlayer()
 
                 print("Player: "..v.Name.." Char: "..v.Character.Name.." Dis: "..Distance)
 
-				--if Distance < RequiredDistance and OnScreen then
+				if OnScreen then -- Distance < RequiredDistance and
 					RequiredDistance = Distance
 					Environment.Locked = v
-				--end
+				end
             end
 			end
 		end
