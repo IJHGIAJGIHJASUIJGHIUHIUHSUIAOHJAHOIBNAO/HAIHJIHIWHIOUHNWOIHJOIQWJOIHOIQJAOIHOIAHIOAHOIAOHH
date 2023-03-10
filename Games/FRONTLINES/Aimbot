@@ -175,9 +175,9 @@ local function GetClosestPlayer()
 									end
 				end
 			
-	end
-	if not Target then 
-		Nof(v.Name, v.Name)	
+		if not Target then 
+			Nof(v.Name, v.Name)	
+		end
 	end
 	return Target
 end 
