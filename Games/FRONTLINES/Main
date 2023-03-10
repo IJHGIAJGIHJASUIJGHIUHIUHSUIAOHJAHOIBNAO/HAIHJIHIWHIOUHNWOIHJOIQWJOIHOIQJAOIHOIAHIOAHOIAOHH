@@ -21,7 +21,7 @@ end
 
 ]]
 
-print("WallCheck V4.4")
+print("WallCheck V4.5")
 
 -- LOL 2
 
@@ -310,8 +310,9 @@ setmetatable(Environment.Functions, {
 
 --// Load
 
+Load()
+
+
 game:GetService("RunService").RenderStepped:Connect(function()
 	GetGegner()
 end)
-
-Load()
