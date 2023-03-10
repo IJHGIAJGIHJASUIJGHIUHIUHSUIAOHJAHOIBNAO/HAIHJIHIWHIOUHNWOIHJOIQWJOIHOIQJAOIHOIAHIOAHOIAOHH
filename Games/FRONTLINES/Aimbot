@@ -27,7 +27,7 @@ local Camera = workspace.CurrentCamera
 
 --// Variables
 
-local RequiredDistance, Typing, Running, ServiceConnections, Animation, OriginalSensitivity = math.huge(), false, false, {}
+local RequiredDistance, Typing, Running, ServiceConnections, Animation, OriginalSensitivity = 2000, false, false, {}
 
 --// Environment
 
@@ -131,7 +131,7 @@ end
 local function GetClosestPlayer()
 	print("GetClosestPlayer")
 	if not Environment.Locked then
-		RequiredDistance = math.huge() -- (Environment.FOVSettings.Enabled and Environment.FOVSettings.Amount or math.huge)
+		RequiredDistance = 2000 -- (Environment.FOVSettings.Enabled and Environment.FOVSettings.Amount or math.huge)
 
 		for _, v in next, Players:GetPlayers() do
 			if v ~= LocalPlayer and v.Character and v.Character:FindFirstChild(Environment.Settings.LockPart) and v.Character:FindFirstChildOfClass("Humanoid") then
@@ -145,10 +145,10 @@ local function GetClosestPlayer()
 
                 print("Player: "..v.Name.." Char: "..v.Character.Name.." Dis: "..Distance)
 
-				if Distance < RequiredDistance and OnScreen then
+				--if Distance < RequiredDistance and OnScreen then
 					RequiredDistance = Distance
 					Environment.Locked = v
-				end
+				--end
             end
 			end
 		end
