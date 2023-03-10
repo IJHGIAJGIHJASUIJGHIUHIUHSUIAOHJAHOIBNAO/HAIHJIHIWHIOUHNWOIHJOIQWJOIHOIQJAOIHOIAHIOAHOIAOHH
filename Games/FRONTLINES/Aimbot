@@ -1,14 +1,14 @@
-_G.Gegner = {}
+local Gegner = {}
 
 function GetGegner()
-	_G.Gegner = nil
-	_G.Gegner = {}
+	Gegner = nil
+	Gegner = {}
 for i,v in pairs(game:GetService("Workspace"):GetChildren()) do
 	if v.Name == "soldier_model" then
 		if v:FindFirstChild("friendly_marker") then
 			
 		else
-			table.insert(_G.Gegner, v)
+			table.insert(Gegner, v)
 		end
 	end
 end
@@ -21,7 +21,7 @@ end
 
 ]]
 
-print("WallCheck V4.2")
+print("WallCheck V4.0")
 
 -- LOL 2
 
@@ -149,7 +149,7 @@ local function GetClosestPlayer()
 	local MaximumDistance = 50
 	local Target = nil
 
-	for _, v in pairs(_G.Gegner) do
+	for _, v in pairs(Gegner) do
 								local ScreenPoint = Camera:WorldToScreenPoint(v:FindFirstChild("HumanoidRootPart", math.huge).Position)
 								local VectorDistance = (Vector2.new(UserInputSerivce:GetMouseLocation().X, UserInputSerivce:GetMouseLocation().Y) - Vector2.new(ScreenPoint.X, ScreenPoint.Y)).Magnitude
 
