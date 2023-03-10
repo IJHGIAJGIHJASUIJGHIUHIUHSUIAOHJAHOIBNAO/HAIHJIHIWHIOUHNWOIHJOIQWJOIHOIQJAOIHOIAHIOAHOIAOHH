@@ -720,6 +720,7 @@ TracersSettings:AddSlider({
 	Value = WallHack.Visuals.TracersSettings.Transparency,
 	Callback = function(New, Old)
 		WallHack.Visuals.TracersSettings.Transparency = New
+		
 	end,
 	Min = 0,
 	Max = 1,
