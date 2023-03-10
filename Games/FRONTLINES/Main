@@ -490,7 +490,7 @@ WallHackChecks:AddToggle({
 	Name = "Enabled",
 	Value = WallHack.Settings.Enabled,
 	Callback = function(New, Old)
-		WallHack.Settings.Enabled = New
+		esp:Toggle(true)
 	end
 }).Default = WallHack.Settings.Enabled
 
@@ -516,7 +516,7 @@ ESPSettings:AddToggle({
 	Name = "Enabled",
 	Value = WallHack.Visuals.ESPSettings.Enabled,
 	Callback = function(New, Old)
-		esp.Boxes = New
+		esp.Boxes = true
 	end
 }).Default = WallHack.Visuals.ESPSettings.Enabled
 
@@ -588,26 +588,6 @@ ESPSettings:AddSlider({
 	Max = 1,
 	Decimals = 2
 }).Default = WallHack.Visuals.ESPSettings.TextTransparency
-
-ESPSettings:AddSlider({
-	Name = "Text Size",
-	Value = WallHack.Visuals.ESPSettings.TextSize,
-	Callback = function(New, Old)
-		WallHack.Visuals.ESPSettings.TextSize = New
-	end,
-	Min = 8,
-	Max = 24
-}).Default = WallHack.Visuals.ESPSettings.TextSize
-
-ESPSettings:AddDropdown({
-	Name = "Text Font",
-	Value = Fonts[WallHack.Visuals.ESPSettings.TextFont + 1],
-	Callback = function(New, Old)
-		WallHack.Visuals.ESPSettings.TextFont = Drawing.Fonts[New]
-	end,
-	List = Fonts,
-	Nothing = "UI"
-}).Default = Fonts[WallHack.Visuals.ESPSettings.TextFont + 1]
 
 BoxesSettings:AddToggle({
 	Name = "Enabled",
@@ -731,7 +711,9 @@ TracersSettings:AddToggle({
 	Name = "Enabled",
 	Value = WallHack.Visuals.TracersSettings.Enabled,
 	Callback = function(New, Old)
-		WallHack.Visuals.TracersSettings.Enabled = New
+		esp.Tracers = New
+
+
 	end
 }).Default = WallHack.Visuals.TracersSettings.Enabled
 
