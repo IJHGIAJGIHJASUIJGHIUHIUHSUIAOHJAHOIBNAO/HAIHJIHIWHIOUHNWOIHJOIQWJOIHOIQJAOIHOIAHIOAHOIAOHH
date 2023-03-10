@@ -143,11 +143,12 @@ local function GetClosestPlayer()
 				local Vector, OnScreen = Camera:WorldToViewportPoint(v.Character[Environment.Settings.LockPart].Position); Vector = ConvertVector(Vector)
 				local Distance = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.Character.HumanoidRootPart.Position).Magnitude
 
-                print("Player: "..v.Name.." Char: "..v.Character.Name.." Dis: "..Distance)
-
 				if OnScreen then -- Distance < RequiredDistance and
+					print("Player: "..v.Name.." Char: "..v.Character.Name.." Dis: "..Distance)
 					RequiredDistance = Distance
 					Environment.Locked = v
+				else
+					print("not OnScreen")
 				end
             end
 			end
