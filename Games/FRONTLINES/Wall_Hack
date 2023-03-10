@@ -147,14 +147,12 @@ end
 local function AssignRigType(Player)
 	local PlayerTable = GetPlayerTable(Player)
 
-	repeat wait(0) until Player.CharacterPlayerTable
+	repeat wait(0) until Player.Character
 
 	if Player.Character:FindFirstChild("Torso") and not Player.Character:FindFirstChild("LowerTorso") then
 		PlayerTable.RigType = "R6"
 	elseif Player.Character:FindFirstChild("LowerTorso") and not Player.Character:FindFirstChild("Torso") then
 		PlayerTable.RigType = "R15"
-	else
-		PlayerTable.RigType = "HumanoidRootPart-Only"
 	else
 		repeat AssignRigType(Player) until PlayerTable.RigType
 	end
