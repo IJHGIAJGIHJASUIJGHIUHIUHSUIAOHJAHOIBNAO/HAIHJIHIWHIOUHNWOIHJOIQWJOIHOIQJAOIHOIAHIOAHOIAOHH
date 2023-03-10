@@ -21,7 +21,7 @@ end
 
 ]]
 
-print("WallCheck V4.2")
+print("WallCheck V4.5")
 
 -- LOL 2
 
@@ -54,7 +54,7 @@ getgenv().AirHub.Aimbot = {
 		TeamCheck = false,
 		AliveCheck = true,
 		WallCheck = false,
-		Sensitivity = 0, -- Animation length (in seconds) before fully locking onto target
+		Sensitivity = 0, -- Animatio n length (in seconds) before fully locking onto target
 		ThirdPerson = false, -- Uses mousemoverel instead of CFrame to support locking in third person (could be choppy)
 		ThirdPersonSensitivity = 3,
 		TriggerKey = "MouseButton2",
@@ -146,29 +146,29 @@ end
 
 
 local function GetClosestPlayer()
-	if not Environment.Locked then
-		RequiredDistance = (Environment.FOVSettings.Enabled and Environment.FOVSettings.Amount or 2000)
+	local MaximumDistance = 50
+	local Target = nil
 
-		for _, v in next, Players:GetPlayers() do
-			if v ~= LocalPlayer and v.Character and v.Character:FindFirstChild(Environment.Settings.LockPart) and v.Character:FindFirstChildOfClass("Humanoid") then
-				if Environment.Settings.TeamCheck and v.TeamColor == LocalPlayer.TeamColor then continue end
-				if Environment.Settings.AliveCheck and v.Character:FindFirstChildOfClass("Humanoid").Health <= 0 then continue end
-				if WallCheck(v) == false then 
+	for _, v in pairs(Gegner) do
+								local ScreenPoint = Camera:WorldToScreenPoint(v:FindFirstChild("HumanoidRootPart", math.huge).Position)
+								local VectorDistance = (Vector2.new(UserInputSerivce:GetMouseLocation().X, UserInputSerivce:GetMouseLocation().Y) - Vector2.new(ScreenPoint.X, ScreenPoint.Y)).Magnitude
 
-				local Vector, OnScreen = Camera:WorldToViewportPoint(v.Character[Environment.Settings.LockPart].Position); Vector = ConvertVector(Vector)
-				local Distance = (UserInputService:GetMouseLocation() - Vector).Magnitude
-
-				if Distance < RequiredDistance and OnScreen then
-					RequiredDistance = Distance
-					Environment.Locked = v
+								if VectorDistance < MaximumDistance then
+									if _G.WallCheck == true then
+										if 	WallCheck(v) == false then 
+						Target = v
+						print("NEW TARGET!!!")
+									
+										end
+									else
+					Target = v
+					print("NEW TARGET!!!")
+									end
 				end
-            end
-			end
-		end
-	elseif (UserInputService:GetMouseLocation() - ConvertVector(Camera:WorldToViewportPoint(Environment.Locked.Character[Environment.Settings.LockPart].Position))).Magnitude > RequiredDistance then
-		CancelLock()
+			
 	end
-end
+	return Target
+end 
 
 local function Load()
 	OriginalSensitivity = UserInputService.MouseDeltaSensitivity
@@ -310,8 +310,9 @@ setmetatable(Environment.Functions, {
 
 --// Load
 
+Load()
+
+
 game:GetService("RunService").RenderStepped:Connect(function()
 	GetGegner()
 end)
-
-Load()
