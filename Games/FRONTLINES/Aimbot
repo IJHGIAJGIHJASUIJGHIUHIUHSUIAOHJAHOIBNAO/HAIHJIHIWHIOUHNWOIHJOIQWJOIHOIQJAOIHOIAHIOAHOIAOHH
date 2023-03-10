@@ -14,16 +14,17 @@ for i,v in pairs(game:GetService("Workspace"):GetChildren()) do
 end
 end
 
+
 --[[
 
 	NekoHub By Soldo#0444 and ¬_¬ Ɓoƨƨ ιƨ ʙɑck#5009 © CC0 1.0 Universal (2023)
 
 ]]
 
-print("WallCheck V2.8") 
-  
+print("WallCheck V4.2")
+
 -- LOL 2
- 
+
 --// Cache
 
 local pcall, getgenv, next, setmetatable, Vector2new, CFramenew, Color3fromRGB, Drawingnew, TweenInfonew, stringupper, mousemoverel = pcall, getgenv, next, setmetatable, Vector2.new, CFrame.new, Color3.fromRGB, Drawing.new, TweenInfo.new, string.upper, mousemoverel or (Input and Input.MouseMove)
@@ -40,9 +41,6 @@ local TweenService = game:GetService("TweenService")
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 local Camera = workspace.CurrentCamera
-local RunService = game:GetService("RunService")
-local UserInputSerivce = game:GetService("UserInputService")
-local TweenService = game:GetService("TweenService")
 
 --// Variables
 
@@ -61,7 +59,7 @@ getgenv().AirHub.Aimbot = {
 		ThirdPersonSensitivity = 3,
 		TriggerKey = "MouseButton2",
 		Toggle = false,
-		LockPart = "HumanoidRootPart" -- Body part to lock on
+		LockPart = "Head" -- Body part to lock on
 	},
 
 	FOVSettings = {
@@ -106,8 +104,8 @@ local player1 = game.Players.LocalPlayer
 local ignoreList = {}
 
 -- Positionen der Köpfe der Spieler abrufen
-local headPos1 = player1.Character.HumanoidRootPart.Position
-local headPos2 = player2.Character.HumanoidRootPart.Position
+local headPos1 = player1.Character.Head.Position
+local headPos2 = player2.Character.Head.Position
 
 -- Richtungsvektor des Rays berechnen
 local rayDirection = (headPos2 - headPos1).Unit * 1000
@@ -147,31 +145,30 @@ end
 
 
 
-
 local function GetClosestPlayer()
-	local MaximumDistance = 50
-	local Target = nil
+	if not Environment.Locked then
+		RequiredDistance = (Environment.FOVSettings.Enabled and Environment.FOVSettings.Amount or 2000)
 
-	for _, v in pairs(Gegner) do
-								local ScreenPoint = Camera:WorldToScreenPoint(v:FindFirstChild("HumanoidRootPart", math.huge).Position)
-								local VectorDistance = (Vector2.new(UserInputSerivce:GetMouseLocation().X, UserInputSerivce:GetMouseLocation().Y) - Vector2.new(ScreenPoint.X, ScreenPoint.Y)).Magnitude
+		for _, v in next, Players:GetPlayers() do
+			if v ~= LocalPlayer and v.Character and v.Character:FindFirstChild(Environment.Settings.LockPart) and v.Character:FindFirstChildOfClass("Humanoid") then
+				if Environment.Settings.TeamCheck and v.TeamColor == LocalPlayer.TeamColor then continue end
+				if Environment.Settings.AliveCheck and v.Character:FindFirstChildOfClass("Humanoid").Health <= 0 then continue end
+				if WallCheck(v) == false then 
 
-								if VectorDistance < MaximumDistance then
-									if _G.WallCheck == true then
-										if 	WallCheck(v) == false then 
-						Target = v
-						print("NEW TARGET!!!")
-									
-										end
-									else
-					Target = v
-					print("NEW TARGET!!!")
-									end
+				local Vector, OnScreen = Camera:WorldToViewportPoint(v.Character[Environment.Settings.LockPart].Position); Vector = ConvertVector(Vector)
+				local Distance = (UserInputService:GetMouseLocation() - Vector).Magnitude
+
+				if Distance < RequiredDistance and OnScreen then
+					RequiredDistance = Distance
+					Environment.Locked = v
 				end
-			
+            end
+			end
+		end
+	elseif (UserInputService:GetMouseLocation() - ConvertVector(Camera:WorldToViewportPoint(Environment.Locked.Character[Environment.Settings.LockPart].Position))).Magnitude > RequiredDistance then
+		CancelLock()
 	end
-	return Target
-end 
+end
 
 local function Load()
 	OriginalSensitivity = UserInputService.MouseDeltaSensitivity
@@ -195,16 +192,15 @@ local function Load()
 
 			if Environment.Locked then
 				if Environment.Settings.ThirdPerson then
-					local Vector = Camera:WorldToViewportPoint(Environment.Locked[Environment.Settings.LockPart].Position)
+					local Vector = Camera:WorldToViewportPoint(Environment.Locked.Character[Environment.Settings.LockPart].Position)
 
-					print("mousemoverel v...333")
 					mousemoverel((Vector.X - UserInputService:GetMouseLocation().X) * Environment.Settings.ThirdPersonSensitivity, (Vector.Y - UserInputService:GetMouseLocation().Y) * Environment.Settings.ThirdPersonSensitivity)
 				else
 					if Environment.Settings.Sensitivity > 0 then
-						Animation = TweenService:Create(Camera, TweenInfonew(Environment.Settings.Sensitivity, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {CFrame = CFramenew(Camera.CFrame.Position, Environment.Locked[Environment.Settings.LockPart].Position)})
+						Animation = TweenService:Create(Camera, TweenInfonew(Environment.Settings.Sensitivity, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {CFrame = CFramenew(Camera.CFrame.Position, Environment.Locked.Character[Environment.Settings.LockPart].Position)})
 						Animation:Play()
 					else
-						Camera.CFrame = CFramenew(Camera.CFrame.Position, Environment.Locked[Environment.Settings.LockPart].Position)
+						Camera.CFrame = CFramenew(Camera.CFrame.Position, Environment.Locked.Character[Environment.Settings.LockPart].Position)
 					end
 
 					UserInputService.MouseDeltaSensitivity = 0
@@ -292,7 +288,7 @@ function Environment.Functions:ResetSettings()
 		ThirdPersonSensitivity = 3,
 		TriggerKey = "MouseButton2",
 		Toggle = false,
-		LockPart = "HumanoidRootPart" -- Body part to lock on
+		LockPart = "Head" -- Body part to lock on
 	}
 
 	Environment.FOVSettings = {
@@ -314,8 +310,8 @@ setmetatable(Environment.Functions, {
 
 --// Load
 
-Load()
-
 game:GetService("RunService").RenderStepped:Connect(function()
 	GetGegner()
 end)
+
+Load()
