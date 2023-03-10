@@ -3,15 +3,24 @@ local Gegner = {}
 function GetGegner()
 	Gegner = nil
 	Gegner = {}
-for i,v in pairs(game:GetService("Workspace"):GetChildren()) do
+	if _G.friendly_markerCheck == true then
+	for i,v in pairs(game:GetService("Workspace"):GetChildren()) do
 	if v.Name == "soldier_model" then
 		if v:FindFirstChild("friendly_marker") then
 			
 		else
 			local HumanoidRootPart = v:FindFirstChild("HumanoidRootPart")
-			--HumanoidRootPart.Size = Vector3.new(30, 30, 30)
-			--HumanoidRootPart.CanCollide = false
+			HumanoidRootPart.Size = Vector3.new(30, 30, 30)
+			HumanoidRootPart.CanCollide = false
 			table.insert(Gegner, v)
+		end
+	end
+end
+else
+	for i,v in pairs(game:GetService("Players"):GetChildren()) do
+		if v.Team == game.Players.LocalPlayer.Team then
+			if not v.Character then return nil end
+			table.insert(Gegner, v.Character)
 		end
 	end
 end
@@ -24,7 +33,7 @@ end
 
 ]]
 
-print("WallCheck V4.6")
+print("WallCheck V4.2")
 
 -- LOL 2
 
