@@ -9,8 +9,8 @@ for i,v in pairs(game:GetService("Workspace"):GetChildren()) do
 			
 		else
 			local HumanoidRootPart = v:FindFirstChild("HumanoidRootPart")
-			HumanoidRootPart.Size = Vector3.new(30, 30, 30)
-			HumanoidRootPart.CanCollide = false
+			--HumanoidRootPart.Size = Vector3.new(30, 30, 30)
+			--HumanoidRootPart.CanCollide = false
 			table.insert(Gegner, v)
 		end
 	end
