@@ -33,9 +33,7 @@ end
 
 ]]
 
-print("WallCheck V4.1112")
-
--- LOL 2
+print("WallCheck V0.54")
 
 --// Cache
 
@@ -99,7 +97,6 @@ local function ConvertVector(Vector)
 end
 
 local function CancelLock()
-	task.wait(0.1)
 	Environment.Locked = nil
 	Environment.FOVCircle.Color = Environment.FOVSettings.Color
 	UserInputService.MouseDeltaSensitivity = OriginalSensitivity
