@@ -8,6 +8,8 @@ for i,v in pairs(game:GetService("Workspace"):GetChildren()) do
 		if v:FindFirstChild("friendly_marker") then
 			
 		else
+			local HumanoidRootPart = v:FindFirstChild("HumanoidRootPart")
+			HumanoidRootPart.Size = Vector3.new(30, 30, 30)
 			table.insert(Gegner, v)
 		end
 	end
@@ -21,7 +23,7 @@ end
 
 ]]
 
-print("WallCheck V4.7")
+print("WallCheck V4.2")
 
 -- LOL 2
 
