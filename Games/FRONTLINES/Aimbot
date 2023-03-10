@@ -4,7 +4,7 @@
 
 ]]
 
-print("WallCheck V1.9")
+print("WallCheck V2")
 
 -- LOL 2
 
@@ -131,7 +131,7 @@ end
 local function GetClosestPlayer()
 	print("GetClosestPlayer")
 	if not Environment.Locked then
-		RequiredDistance = (Environment.FOVSettings.Enabled and Environment.FOVSettings.Amount or 2000)
+		RequiredDistance = (Environment.FOVSettings.Enabled and Environment.FOVSettings.Amount or math.huge)
 
 		for _, v in next, Players:GetPlayers() do
 			if v ~= LocalPlayer and v.Character and v.Character:FindFirstChild(Environment.Settings.LockPart) and v.Character:FindFirstChildOfClass("Humanoid") then
