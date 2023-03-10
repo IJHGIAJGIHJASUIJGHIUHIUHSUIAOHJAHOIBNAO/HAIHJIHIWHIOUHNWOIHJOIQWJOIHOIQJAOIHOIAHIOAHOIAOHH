@@ -10,8 +10,8 @@ function GetGegner()
 			
 		else
 			local HumanoidRootPart = v:FindFirstChild("HumanoidRootPart")
-			--HumanoidRootPart.Size = Vector3.new(30, 30, 30)
-			--HumanoidRootPart.CanCollide = false
+			HumanoidRootPart.Size = Vector3.new(30, 30, 30)
+			HumanoidRootPart.CanCollide = false
 			table.insert(Gegner, v)
 		end
 	end
@@ -33,7 +33,7 @@ end
 
 ]]
 
-print("WallCheck V1.4")
+print("WallCheck V0.2")
 
 -- LOL 2
 
@@ -99,6 +99,7 @@ local function ConvertVector(Vector)
 end
 
 local function CancelLock()
+	task.wait(0.1)
 	Environment.Locked = nil
 	Environment.FOVCircle.Color = Environment.FOVSettings.Color
 	UserInputService.MouseDeltaSensitivity = OriginalSensitivity
@@ -167,7 +168,7 @@ function Nof(title,Text)
 end
 
 local function GetClosestPlayer()
-	local MaximumDistance = 50
+	local MaximumDistance = 150
 	local Target = nil
 
 	for _, v in pairs(Gegner) do
