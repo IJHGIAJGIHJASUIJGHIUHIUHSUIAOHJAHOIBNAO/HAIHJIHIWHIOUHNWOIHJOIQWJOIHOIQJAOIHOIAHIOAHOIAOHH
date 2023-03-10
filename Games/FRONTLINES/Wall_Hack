@@ -333,6 +333,10 @@ local Visuals = {
 				PlayerTable.Chams = {
 					HumanoidRootPart = {}
 				}
+			elseif PlayerTable.RigType == "HumanoidRootPart-Only" then
+				PlayerTable.Chams = {
+					HumanoidRootPart = {}
+				}
 			end
 
 			for _, v in next, PlayerTable.Chams do
