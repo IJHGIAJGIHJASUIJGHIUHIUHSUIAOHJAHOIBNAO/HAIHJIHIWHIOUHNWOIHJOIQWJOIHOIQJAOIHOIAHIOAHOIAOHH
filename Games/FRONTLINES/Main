@@ -712,8 +712,6 @@ TracersSettings:AddToggle({
 	Value = WallHack.Visuals.TracersSettings.Enabled,
 	Callback = function(New, Old)
 		esp.Tracers = New
-
-
 	end
 }).Default = WallHack.Visuals.TracersSettings.Enabled
 
